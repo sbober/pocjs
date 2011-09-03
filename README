@@ -1,0 +1,40 @@
+PoC-JS
+======
+
+This is a JavaScript port of the game 
+"Prelude of the Chambered" by Markus "notch" Persson.
+
+Currently this is already kind of working in current versions of Firefox,
+Chrome/Chromium and likely also Safari (and other WebKit browsers). Support for
+Opera and Internet Explorer 9+ is planned.
+
+"Kind of working" means that the port is playable up to the first ice block.
+
+Performance is acceptable although there surely are laggy moments.
+
+
+Lessons learned
+----------------
+
+- CanvasContext.drawImage takes the PNG alpha channel into account.
+  The original pixel values are therefore not identical to
+  CanvasContext.getImageData(...).data
+
+- doing level design as graphics may be a good idea, storing level meta data
+  in the alpha channel may be not
+
+- having no Integer type sucks
+
+- having only function level scope sucks (no lexical scope? seriously?)
+
+- having the canvas engine scale an image is much faster than doing it
+  in JS (oh, really?)
+
+- all browsers use anti-aliasing when scaling by default.
+  Only Firefox can be told with
+
+    CanvasContext.mozImageSmoothingEnabled = false
+
+  to have a nice ruff, blocky scale
+
+
