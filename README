@@ -8,6 +8,9 @@ Currently this is already working in current versions of Firefox,
 Chrome/Chromium and likely also Safari (and other WebKit browsers). Support for
 Opera and Internet Explorer 9+ is planned.
 
+The game looks best on Firefox as its canvas scaling can be made to _not_ use
+anti-aliasing. WebKit-based browsers produce a really squishy scale.
+
 Performance is acceptable although there surely are laggy moments.
 
 Some bugs are still to fix.
