@@ -6,11 +6,13 @@
     <link rel="stylesheet" href="index.css" type="text/css" />
     <!-- load Dojo -->
     <script src="dojo/dojo.js.uncompressed.js"></script>
+    <!--
     <script src="zlib.js"></script>
     <script src="png.js"></script>
+    -->
     <script type="text/javascript">
         function init() {
-            dojo.require("pocjs.all");
+            dojo.require("pocjs.combined");
             pocjs.__game = new pocjs.EscapeComponent(dojo.byId("gamescreen"));
             pocjs.__game.start();
         }
