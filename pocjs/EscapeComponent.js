@@ -85,6 +85,7 @@ dojo.declare("pocjs.EscapeComponent", null, {
 
     start: function() {
         var self = this;
+        dojo.create('button', {onclick: 'pocjs.__game.stop();', innerHTML: 'Stop'}, dojo.body());
 
 //        this.run();
         this.dfd.then(function(res) {
