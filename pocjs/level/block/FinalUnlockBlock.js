@@ -13,7 +13,7 @@ dojo.declare("pocjs.level.block.FinalUnlockBlock", pocjs.level.block.SolidBlock,
 
         pocjs.Sound.click1.play();
         this.pressed = true;
-        level.trigger(id, true);
+        level.trigger(this.id, true);
 
         return true;
     }

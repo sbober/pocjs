@@ -11,7 +11,7 @@ dojo.declare("pocjs.entities.KeyEntity", pocjs.entities.Entity, {
         this.y = 0.5;
         this.ya = 0.025;
         this.sprite = new pocjs.gui.Sprite(0, 0, 0, 16 + 3, this.COLOR);
-        this.sprites.add(this.sprite);
+        this.sprites.push(this.sprite);
     },
 
     tick: function() {

@@ -41,9 +41,9 @@ dojo.declare("pocjs.entities.GhostBossEntity", pocjs.entities.EnemyEntity, {
                 this.shootDelay = 10;
                 this.level.addEntity(
                     new pocjs.entities.Bullet(
-                        this, x, z,
+                        this, this.x, this.z,
                         Math.atan2( this.level.player.x - this.x, this.level.player.z - this.z),
-                        0.20, 1, defaultColor));
+                        0.20, 1, this.defaultColor));
             }
 
         }
