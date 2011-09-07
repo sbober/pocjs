@@ -78,7 +78,7 @@ dojo.declare("pocjs.gui.Screen", pocjs.gui.Bitmap, {
                         var xp = ((i % this.width) - this.viewport.width / 2.0) / this.width * 2;
                         var yp = ((i / this.width) - this.viewport.height / 2.0) / this.viewport.height * 2;
 
-                        if (Math.random() * 0xffffff + offs < Math.sqrt(xp * xp + yp * yp)) this.pixels[i] = Math.floor(Math.floor(Math.random() * 5)  / 4) * 0x550000;
+                        if (Math.random() + offs < Math.sqrt(xp * xp + yp * yp)) this.pixels[i] = Math.floor(Math.floor(Math.random() * 5)  / 4) * 0x550000;
                     }
                 }
             }
