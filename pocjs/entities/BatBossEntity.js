@@ -15,7 +15,7 @@ dojo.declare("pocjs.entities.BatBossEntity", pocjs.entities.EnemyEntity, {
 
     die: function() {
         pocjs.Sound.bosskill.play();
-        this.level.addEntity(new pocjs.entitiesKeyEntity(this.x, this.z));
+        this.level.addEntity(new pocjs.entities.KeyEntity(this.x, this.z));
     },
 
     tick: function() {

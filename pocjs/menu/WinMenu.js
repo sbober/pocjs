@@ -12,14 +12,14 @@ dojo.declare("pocjs.menu.WinMenu", pocjs.menu.Menu, {
     render: function(target) {
         target.drawPart(pocjs.Art.logo, 0, 10, 0, 65, 160, 23, pocjs.Art.getCol(0xffffff));
 
-        var seconds = player.time / 60 << 0;
+        var seconds = this.player.time / 60 << 0;
         var minutes = seconds / 60 << 0;
         seconds %= 60;
         var timeString = minutes + ":";
         if (seconds < 10) timeString += "0";
         timeString += seconds;
         target.drawString(
-            "Trinkets: " + player.loot + "/12",
+            "Trinkets: " + this.player.loot + "/12",
             40, 45 + 10 * 0, pocjs.Art.getCol(0x909090));
         target.drawString(
             "Time: " + timeString,

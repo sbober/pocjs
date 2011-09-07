@@ -1,7 +1,7 @@
 dojo.provide("pocjs.level.OverworldLevel");
 
 dojo.declare("pocjs.level.OverworldLevel", pocjs.level.Level, {
-    contructor: function() {
+    constructor: function() {
             this.ceilTex = -1;
             this.floorCol = 0x508253;
             this.floorTex = 8 * 3;

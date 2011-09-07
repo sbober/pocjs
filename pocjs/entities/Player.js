@@ -100,14 +100,14 @@ dojo.declare("pocjs.entities.Player", pocjs.entities.Entity, {
                 this.za = 0;
                 if (this.xa > 0) this.xa = 0.08;
                 else this.xa = -0.08;
-                this.z += (( (this.z + 0.5) << 0) - this.z) * 0.2;
+                this.z += ( Math.floor(this.z + 0.5) - this.z) * 0.2;
             }
             else if (this.xa * this.xa < this.za * this.za) {
                 this.sliding = true;
                 this.xa = 0;
                 if (this.za > 0) this.za = 0.08;
                 else this.za = -0.08;
-                this.x += (( (this.x + 0.5)) << 0 - this.x) * 0.2;
+                this.x += ( Math.floor(this.x + 0.5) - this.x) * 0.2;
             }
             else {
                 this.xa -= (xm * Math.cos(this.rot) + zm * Math.sin(this.rot)) * 0.1;

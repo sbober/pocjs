@@ -68,10 +68,10 @@ dojo.declare("pocjs.entities.Entity", null, {
     },
 
     isFree: function(xx, yy) {
-        var x0 = (Math.floor(xx + 0.5 - this.r)) << 0;
-        var x1 = (Math.floor(xx + 0.5 + this.r)) << 0;
-        var y0 = (Math.floor(yy + 0.5 - this.r)) << 0;
-        var y1 = (Math.floor(yy + 0.5 + this.r)) << 0;
+        var x0 = Math.floor(xx + 0.5 - this.r);
+        var x1 = Math.floor(xx + 0.5 + this.r);
+        var y0 = Math.floor(yy + 0.5 - this.r);
+        var y1 = Math.floor(yy + 0.5 + this.r);
 
 
         if (this.level.getBlock(x0, y0).blocks(this)) return false;
@@ -79,8 +79,8 @@ dojo.declare("pocjs.entities.Entity", null, {
         if (this.level.getBlock(x0, y1).blocks(this)) return false;
         if (this.level.getBlock(x1, y1).blocks(this)) return false;
 
-        var xc = (Math.floor(xx + 0.5)) << 0;
-        var zc = (Math.floor(yy + 0.5)) << 0;
+        var xc = Math.floor(xx + 0.5);
+        var zc = Math.floor(yy + 0.5);
         var rr = 2;
         for (var z = zc - rr; z <= zc + rr; z++) {
             for (var x = xc - rr; x <= xc + rr; x++) {
