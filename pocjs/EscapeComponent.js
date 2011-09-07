@@ -84,7 +84,10 @@ dojo.declare("pocjs.EscapeComponent", null, {
 
     start: function() {
         var self = this;
-        dojo.create('button', {onclick: 'pocjs.__game.stop();', innerHTML: 'Stop'}, dojo.body());
+        dojo.create('button', {
+            onclick: 'pocjs.__game.stop();',
+            innerHTML: 'Stop wild JS'
+        }, dojo.body());
 
 //        this.run();
         this.dfd.then(function(res) {
@@ -105,8 +108,8 @@ dojo.declare("pocjs.EscapeComponent", null, {
 
         var passedTime = (Date.now() - this.lastTime)/1000;
         if (passedTime >= 2) {
-            var fps = this.frames / passedTime;
-            dojo.byId('fps').innerHTML = "" + fps + " FPS";
+            var fps = this.frames / passedTime <<0;
+            dojo.byId('status').innerHTML = "" + fps + " FPS";
             this.frames = 0;
             this.lastTime = Date.now();
         }
