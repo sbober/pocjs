@@ -5,7 +5,7 @@ dojo.declare("pocjs.InputHandler", null, {
 
     keyup: function(evt) {
         this.keys[evt.keyCode] = false;
-        console.log("up keycode: " + evt.keyCode);
+        // console.log("up keycode: " + evt.keyCode);
         evt.preventDefault();
     },
 

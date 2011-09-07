@@ -40,13 +40,10 @@ dojo.declare("pocjs.level.Level", null, {
         for (var y = 0; y < h; y++) {
             for (var x = 0; x < w; x++) {
                 var col = pixels[x + y * w] & 0xffffff;
-                if(x == 22 && y == 34)
-                console.log("col: " + pixels[x+y*w]);
+
                 var id = 255 - ((pixels[x + y * w] >> 24) & 0xff);
 
                 var block = this.getNewBlock(x, y, col);
-                if(x == 22 && y == 34)
-                console.log("x/y/col/type: " + x + "/" + y + "/" + col.toString(16) +  "/" + block.declaredClass);
                 block.id = id;
 
                 if (block.tex == -1) block.tex = this.wallTex;
@@ -263,7 +260,7 @@ dojo.mixin(pocjs.level.Level, {
         var self = this;
 
         var dfd = new dojo.Deferred();
-        console.log("level name: " + name);
+
         PNG.load("res/level/" + name + ".png", function(png) {
             var w = png.width;
             var h = png.height;

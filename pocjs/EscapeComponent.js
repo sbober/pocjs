@@ -57,7 +57,6 @@ dojo.declare("pocjs.EscapeComponent", null, {
         "start crypt ice temple overworld dungeon"
         .split(" ")
         .forEach(function(name) {
-            console.log("load level " + name);
             list.push( pocjs.level.Level.loadLevelBitmap(name) );
         });
 

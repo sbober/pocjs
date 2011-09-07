@@ -15,7 +15,6 @@ dojo.declare("pocjs.gui.Bitmap", null, {
     },
 
     constructor: function(width, height) {
-        console.log("Bitmap" + width + "/" + height);
         this.width = width;
         this.height = height;
         this.pixels = new Array(width * height);
@@ -77,10 +76,6 @@ dojo.declare("pocjs.gui.Bitmap", null, {
 
     scalecount: 0,
     scaleDraw: function(bitmap, scale, xOffs, yOffs, xo, yo, w, h, col) {
-        if (this.scalecount < 30) {
-            console.log("scaleDraw: "); console.dir(arguments);this.scalecount++;
-        }
-  //      xOffs <<= 0; yOffs <<= 0; xo <<= 0; yo <<= 0; w <<= 0; h <<= 0;
 	for (var y = 0; y < h * scale; y++) {
 	    var yPix = y + yOffs;
 	    if (yPix < 0 || yPix >= this.height) continue;

@@ -29,7 +29,6 @@ dojo.declare("pocjs.entities.Player", pocjs.entities.Entity, {
     time: null,
 
     tick: function(up, down, left, right, turnLeft, turnRight) {
-        //console.log("tick " + this.xa);
         if (this.dead) {
             up = down = left = right = turnLeft = turnRight = false;
             this.deadTime++;

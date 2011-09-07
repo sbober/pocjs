@@ -11,7 +11,6 @@ dojo.declare("pocjs.gui.Screen", pocjs.gui.Bitmap, {
     constructor: function(width, height) {
         //this.inherited(arguments);
 
-        console.log("Screen");
         this.viewport = new pocjs.gui.Bitmap3D(width, height - this.PANEL_HEIGHT);
     },
 
