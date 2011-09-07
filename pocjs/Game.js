@@ -44,12 +44,12 @@ dojo.declare("pocjs.Game", null,  {
 	}
 
         var kmap = {
-            w: "w".charCodeAt(),
-            s: "s".charCodeAt(),
-            a: "a".charCodeAt(),
-            d: "d".charCodeAt(),
-            q: "q".charCodeAt(),
-            e: "e".charCodeAt()
+            w: "W".charCodeAt(),
+            s: "S".charCodeAt(),
+            a: "A".charCodeAt(),
+            d: "D".charCodeAt(),
+            q: "Q".charCodeAt(),
+            e: "E".charCodeAt()
         };
 
 	this.time++;
