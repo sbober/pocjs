@@ -4,14 +4,13 @@ PoC-JS
 This is a JavaScript port of the game 
 "Prelude of the Chambered" by Markus "notch" Persson.
 
-Currently this is already kind of working in current versions of Firefox,
+Currently this is already working in current versions of Firefox,
 Chrome/Chromium and likely also Safari (and other WebKit browsers). Support for
 Opera and Internet Explorer 9+ is planned.
 
-"Kind of working" means that the port is playable up to the first ice block.
-
 Performance is acceptable although there surely are laggy moments.
 
+Some bugs are still to fix.
 
 Lessons learned
 ----------------
@@ -37,4 +36,13 @@ Lessons learned
 
   to have a nice ruff, blocky scale
 
+- play testing a permadeath game that has no saves is annoying
+
+
+Copyright
+---------
+
+- Idea, code, assets (c) 2011 Mojang AB
+
+- Javascript port by Sebastian Bober
 
