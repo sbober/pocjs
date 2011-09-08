@@ -24,7 +24,9 @@ pocjs.Art.loadBitmap = function(name, filename) {
                           | data[1] << 8
                           | data[2];
                 var col = (input & 0xf) >> 2;
-                if (input == (0xffff00ff << 0)) { col = -1; }
+                // if (input == (0xffff00ff << 0)) { col = -1; }
+                // silence closure compiler
+                if (input == -65281) { col = -1; }
                 result.pixels[x + y*w] = col;
                 pixels[x + y*w] = input;
             }
