@@ -16,7 +16,7 @@ dojo.declare("pocjs.menu.InstructionsMenu", pocjs.menu.Menu, {
             "The 1-8 keys select",
             "items from the inventory",
             "",
-            "Space uses items",
+            "Space uses items"
         ];
         
         for (var i=0; i<lines.length; i++) {

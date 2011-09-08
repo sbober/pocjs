@@ -17,7 +17,7 @@ dojo.declare("pocjs.menu.AboutMenu", pocjs.menu.Menu, {
             "",
             "This game is freeware,",
             "and was made from scratch",
-            "in just 48 hours.",
+            "in just 48 hours."
         ];
         
         for (var i = 0; i < lines.length; i++) {
