@@ -46,7 +46,7 @@
     APNG_BLEND_OP_SOURCE = 0;
     APNG_BLEND_OP_OVER = 1;
     function PNG(data) {
-      var chunkSize, colors, delayDen, delayNum, frame, i, section, short, _ref;
+      var chunkSize, colors, delayDen, delayNum, frame, i, section, rest, _ref;
       this.data = data;
       this.pos = 8;
       this.palette = [];
@@ -117,10 +117,11 @@
             this.transparency = {};
             switch (this.colorType) {
               case 3:
+                // alpha for indexed palette; fill up alpha for all colors
                 this.transparency.indexed = this.read(chunkSize);
-                short = 255 - this.transparency.indexed.length;
-                if (short > 0) {
-                  for (i = 0; 0 <= short ? i < short : i > short; 0 <= short ? i++ : i--) {
+                rest = 255 - this.transparency.indexed.length;
+                if (rest > 0) {
+                  for (i = 0; i < rest; i++) {
                     this.transparency.indexed.push(255);
                   }
                 }
@@ -165,7 +166,6 @@
         }
         this.pos += 4;
       }
-      return;
     }
     PNG.prototype.read = function(bytes) {
       var i, _results;
@@ -190,7 +190,7 @@
       return b1 | b2;
     };
     PNG.prototype.decodePixels = function(data) {
-      var byte, col, filter, i, left, length, p, pa, paeth, pb, pc, pixelBytes, pixels, pos, row, rowData, s, scanlineLength, upper, upperLeft, _ref, _step;
+      var read_byte, col, filter, i, left, length, p, pa, paeth, pb, pc, pixelBytes, pixels, pos, row, rowData, s, scanlineLength, upper, upperLeft, _ref, _step;
       if (data == null) {
         data = this.imgData;
       }
@@ -217,31 +217,31 @@
             break;
           case 1:
             while (i < scanlineLength) {
-              byte = data[pos++];
+              read_byte = data[pos++];
               left = i < pixelBytes ? 0 : rowData[i - pixelBytes];
-              rowData[i++] = (byte + left) % 256;
+              rowData[i++] = (read_byte + left) % 256;
             }
             break;
           case 2:
             while (i < scanlineLength) {
-              byte = data[pos++];
+              read_byte = data[pos++];
               col = (i - (i % pixelBytes)) / pixelBytes;
               upper = row === 0 ? 0 : pixels[row - 1][col][i % pixelBytes];
-              rowData[i++] = (upper + byte) % 256;
+              rowData[i++] = (upper + read_byte) % 256;
             }
             break;
           case 3:
             while (i < scanlineLength) {
-              byte = data[pos++];
+              read_byte = data[pos++];
               col = (i - (i % pixelBytes)) / pixelBytes;
               left = i < pixelBytes ? 0 : rowData[i - pixelBytes];
               upper = row === 0 ? 0 : pixels[row - 1][col][i % pixelBytes];
-              rowData[i++] = (byte + Math.floor((left + upper) / 2)) % 256;
+              rowData[i++] = (read_byte + Math.floor((left + upper) / 2)) % 256;
             }
             break;
           case 4:
             while (i < scanlineLength) {
-              byte = data[pos++];
+              read_byte = data[pos++];
               col = (i - (i % pixelBytes)) / pixelBytes;
               left = i < pixelBytes ? 0 : rowData[i - pixelBytes];
               if (row === 0) {
@@ -261,7 +261,7 @@
               } else {
                 paeth = upperLeft;
               }
-              rowData[i++] = (byte + paeth) % 256;
+              rowData[i++] = (read_byte + paeth) % 256;
             }
             break;
           default:
@@ -290,7 +290,7 @@
       return decodingMap;
     };
     PNG.prototype.copyToImageData = function(imageData, pixels) {
-      var alpha, byte, colors, data, i, palette, pixel, row, v, _i, _j, _k, _len, _len2, _len3, _ref;
+      var alpha, copy_byte, colors, data, i, palette, pixel, row, v, _i, _j, _k, _len, _len2, _len3, _ref;
       colors = this.colors;
       palette = null;
       alpha = this.hasAlphaChannel;
@@ -316,8 +316,8 @@
             data[i++] = pixel[1] || 255;
           } else {
             for (_k = 0, _len3 = pixel.length; _k < _len3; _k++) {
-              byte = pixel[_k];
-              data[i++] = byte;
+              copy_byte = pixel[_k];
+              data[i++] = copy_byte;
             }
             if (!alpha) {
               data[i++] = 255;
