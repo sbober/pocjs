@@ -135,25 +135,38 @@ dojo.declare("pocjs.gui.Bitmap3D", pocjs.gui.Bitmap, {
     },
 
     renderFloor: function(level) {
-	for (var y = 0; y < this.height; y++) {
-	    var yd = ((y + 0.5) - this.yCenter) / this.fov;
+        var fpixels = pocjs.Art.floors.pixels;
+        var height  = this.height,  width   = this.width, 
+            xCenter = this.xCenter, yCenter = this.yCenter,
+            fov     = this.fov,
+            xCam    = this.xCam,    yCam    = this.yCam,    zCam    = this.zCam,
+            rCos    = this.rCos,    rSin    = this.rSin,
+            zBuffer = this.zBuffer, pixels  = this.pixels;
+
+        var xbase = (xCam + 0.5) * 8;
+        var ybase = (yCam + 0.5) * 8;
+
+	for (var y = 0; y < height; y++) {
+	    var yd = ((y + 0.5) - yCenter) / fov;
 
 	    var floor = true;
-	    var zd = (4 - this.zCam * 8) / yd;
+	    var zd = (4 - zCam * 8) / yd;
 	    if (yd < 0) {
 		floor = false;
-		zd = (4 + this.zCam * 8) / -yd;
+		zd = (4 + zCam * 8) / -yd;
 	    }
 
-            var fpixels = pocjs.Art.floors.pixels;
-	    for (var x = 0; x < this.width; x++) {
-		if (this.zBuffer[x + y * this.width] <= zd) continue;
+            var zSin = zd * rSin;
+            var zCos = zd * rCos;
 
-		var xd = (this.xCenter - x) / this.fov;
+	    for (var x = 0; x < width; x++) {
+		if (zBuffer[x + y * width] <= zd) continue;
+
+		var xd = (xCenter - x) / fov;
 		xd *= zd;
 
-		var xx = xd * this.rCos + zd * this.rSin + (this.xCam + 0.5) * 8;
-                var yy = zd * this.rCos - xd * this.rSin + (this.yCam + 0.5) * 8;
+		var xx = xd * rCos + zSin + xbase;
+                var yy = zCos - xd * rSin + ybase;
 
                 var i_xPix = xx * 2 <<0;
 		var i_yPix = yy * 2 <<0;
@@ -169,11 +182,12 @@ dojo.declare("pocjs.gui.Bitmap3D", pocjs.gui.Bitmap, {
 		}
 
 		if (tex < 0) {
-                    this.zBuffer[x + y * this.width] = -1;
+                    zBuffer[x + y * width] = -1;
                 }
                 else {
-                    this.zBuffer[x + y * this.width] = zd;
-                    this.pixels[x + y * this.width] = fpixels[((i_xPix & 15) + (tex % 8) * 16) + ((i_yPix & 15) + (tex / 8 <<0) * 16) * 128] * col;
+                    zBuffer[x + y * width] = zd;
+                    var offset = ((i_xPix & 15) + (tex % 8) * 16) + ((i_yPix & 15) + (tex / 8 <<0) * 16) * 128;
+                    pixels[x + y * width] = fpixels[offset] * col;
 		}
 	    }
 	}
@@ -181,24 +195,34 @@ dojo.declare("pocjs.gui.Bitmap3D", pocjs.gui.Bitmap, {
     },
 
     renderSprite: function(x, y, z, tex, color) {
-	var xc = (x - this.xCam) * 2 - this.rSin * 0.2;
-        var yc = (y - this.zCam) * 2;
-	var zc = (z - this.yCam) * 2 - this.rCos * 0.2;
+        var height  = this.height,  width   = this.width, 
+            xCenter = this.xCenter, yCenter = this.yCenter,
+            fov     = this.fov,
+            xCam    = this.xCam,    yCam    = this.yCam,    zCam    = this.zCam,
+            rCos    = this.rCos,    rSin    = this.rSin,
+            zBuffer = this.zBuffer, pixels  = this.pixels;
 
-        var xx = xc * this.rCos - zc * this.rSin;
+        var fpixels = pocjs.Art.sprites.pixels;
+
+	var xc = (x - xCam) * 2 - rSin * 0.2;
+        var yc = (y - zCam) * 2;
+	var zc = (z - yCam) * 2 - rCos * 0.2;
+
+        var xx = xc * rCos - zc * rSin;
 	var yy = yc;
-	var zz = zc * this.rCos + xc * this.rSin;
+	var zz = zc * rCos + xc * rSin;
 
 	if (zz < 0.1) return;
 
-	var xPixel = this.xCenter - (xx / zz * this.fov);
-	var yPixel = (yy / zz * this.fov + this.yCenter);
+	var xPixel = xCenter - (xx / zz * fov);
+	var yPixel = (yy / zz * fov + yCenter);
 
-        var xPixel0 = xPixel - this.height / zz;
-	var xPixel1 = xPixel + this.height / zz;
+        var zh = height / zz;
+        var xPixel0 = xPixel - zh;
+	var xPixel1 = xPixel + zh;
 
-        var yPixel0 = yPixel - this.height / zz;
-        var yPixel1 = yPixel + this.height / zz;
+        var yPixel0 = yPixel - zh;
+        var yPixel1 = yPixel + zh;
 
         var i_xp0 = Math.ceil(xPixel0);
         var i_xp1 = Math.ceil(xPixel1);
@@ -206,22 +230,26 @@ dojo.declare("pocjs.gui.Bitmap3D", pocjs.gui.Bitmap, {
         var i_yp1 = Math.ceil(yPixel1);
 
         if (i_xp0 < 0) i_xp0 = 0;
-        if (i_xp1 > this.width) i_xp1 = this.width;
+        if (i_xp1 > width) i_xp1 = width;
         if (i_yp0 < 0) i_yp0 = 0;
-        if (i_yp1 > this.height) i_yp1 = this.height;
+        if (i_yp1 > height) i_yp1 = height;
         zz *= 4;
+
+        var xtex = tex % 8 * 16;
+        var ytex = (tex / 8 <<0) * 16;
+
         for (var yp = i_yp0; yp < i_yp1; yp++) {
             var ypr = (yp - yPixel0) / (yPixel1 - yPixel0);
             var i_yt = ypr * 16 <<0;
             for (var xp = i_xp0; xp < i_xp1; xp++) {
                 var xpr = (xp - xPixel0) / (xPixel1 - xPixel0);
                 var i_xt = xpr * 16 <<0;
-                if (this.zBuffer[xp + yp * this.width] > zz) {
-                    var offset = (i_xt + tex % 8 * 16) + (i_yt + (tex / 8 <<0) * 16) * 128;
-                    var col = pocjs.Art.sprites.pixels[offset];
+                if (zBuffer[xp + yp * width] > zz) {
+                    var offset = i_xt + xtex + (i_yt + ytex) * 128;
+                    var col = fpixels[offset];
                     if (col >= 0) {
-                        this.pixels[xp + yp * this.width] = col * color;
-                        this.zBuffer[xp + yp * this.width] = zz;
+                        pixels[xp + yp * width] = col * color;
+                        zBuffer[xp + yp * width] = zz;
                     }
                 }
             }
@@ -293,6 +321,8 @@ dojo.declare("pocjs.gui.Bitmap3D", pocjs.gui.Bitmap, {
         var ixta = xt1 * iz1 - ixt0;
         var iw = 1 / (xPixel1 - xPixel0);
 
+        var xtex = tex % 8 * 16;
+        var ytex = (tex / 8 <<0) * 16;
         for (var x = i_xp0; x < i_xp1; x++) {
             var pr = (x - xPixel0) * iw;
             var iz = iz0 + iza * pr;
@@ -313,7 +343,7 @@ dojo.declare("pocjs.gui.Bitmap3D", pocjs.gui.Bitmap, {
             for (var y = i_yp0; y < i_yp1; y++) {
                 var pry = (y - yPixel0) * ih;
                 var i_yTex = 16 * pry << 0;
-                var offset = ((i_xTex) + (tex % 8) * 16) + (i_yTex + (tex / 8 <<0) * 16) * 128;
+                var offset = i_xTex + xtex + (i_yTex + ytex) * 128;
                 this.pixels[x + y * this.width] = pocjs.Art.walls.pixels[offset] * color;
                 this.zBuffer[x + y * this.width] = 1 / iz * 4;
             }
