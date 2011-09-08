@@ -79,9 +79,4 @@ dojo.declare("pocjs.level.block.Block", null, {
     }
 });
 
-dojo.require("pocjs.level.block.SolidBlock");
-
-dojo.extend(pocjs.level.block.Block, {
-    solidWall: new pocjs.level.block.SolidBlock()
-});
 
