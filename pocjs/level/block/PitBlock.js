@@ -15,7 +15,7 @@ dojo.declare("pocjs.level.block.PitBlock", pocjs.level.block.Block, {
             this.filled = true;
             this.blocksMotion = false;
             this.addSprite(
-                new pocjs.gui.Sprite(0, 0, 0, 8 + 2, pocjs.entities.BoulderEntity.COLOR)
+                new pocjs.gui.Sprite(0, 0, 0, 8 + 2, pocjs.entities.BoulderEntity.prototype.COLOR)
             );
             pocjs.Sound.thud.play();
         }
