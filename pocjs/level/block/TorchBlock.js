@@ -11,21 +11,30 @@ dojo.declare("pocjs.level.block.TorchBlock", pocjs.level.block.Block, {
     decorate: function(level, x, y) {
 //        Random random = new Random((x + y * 1000) * 341871231);
         var r = 0.4;
+        var block;
         for (var i = 0; i < 1000; i++) {
             var face = Math.random() * 4 << 0;
-            if (face == 0 && level.getBlock(x - 1, y).solidRender) {
+
+            block = level.getBlock(x - 1, y);
+            if (face == 0 && block.solidRender && !(block instanceof pocjs.level.block.VanishBlock)) {
                 this.torchSprite.x -= r;
                 break;
             }
-            if (face == 1 && level.getBlock(x, y - 1).solidRender) {
+
+            block = level.getBlock(x, y - 1);
+            if (face == 1 && block.solidRender && !(block instanceof pocjs.level.block.VanishBlock)) {
                 this.torchSprite.z -= r;
                 break;
             }
-            if (face == 2 && level.getBlock(x + 1, y).solidRender) {
+
+            block = level.getBlock(x + 1, y);
+            if (face == 2 && block.solidRender && !(block instanceof pocjs.level.block.VanishBlock)) {
                 this.torchSprite.x += r;
                 break;
             }
-            if (face == 3 && level.getBlock(x, y + 1).solidRender) {
+
+            block = level.getBlock(x, y + 1);
+            if (face == 3 && block.solidRender && !(block instanceof pocjs.level.block.VanishBlock)) {
                 this.torchSprite.z += r;
                 break;
             }

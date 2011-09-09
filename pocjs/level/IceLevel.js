@@ -2,9 +2,9 @@ dojo.provide("pocjs.level.IceLevel");
 
 dojo.declare("pocjs.level.IceLevel", pocjs.level.Level, {
     constructor: function() {
-            this.wallCol =  0xB8DBE0;
+            this.ceilCol =  0xB8DBE0;
             this.floorCol = 0xB8DBE0;
-            this.ceilCol =  0x6BE8FF;
+            this.wallCol =  0x6BE8FF;
             this.name = "The Frost Cave";
     },
 

@@ -63,7 +63,7 @@ dojo.declare("pocjs.level.Level", null, {
         for (var y = 0; y < h; y++) {
             for (var x = 0; x < w; x++) {
                 var col = pixels[x + y * w] & 0xffffff;
-                this.decorateBlock(x, y, block, col);
+                this.decorateBlock(x, y, this.blocks[x + y * w], col);
             }
         }
     },

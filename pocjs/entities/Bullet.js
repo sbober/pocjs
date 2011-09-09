@@ -14,7 +14,7 @@ dojo.declare("pocjs.entities.Bullet", pocjs.entities.Entity, {
 
         this.sprites.push(
             new pocjs.gui.Sprite(
-                0, 0, 0, 8 * 3 + this.sprite, pocjs.Art.getCol(col)
+                0, 0, 0, 8 * 3 + sprite, pocjs.Art.getCol(col)
             )
         );
 
