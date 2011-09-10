@@ -7,9 +7,12 @@ dojo.mixin(pocjs.Sound, {
     loadSound: function(name) {
         var dfd = new dojo.Deferred();
         var audio = new Audio();
-        audio.addEventListener("canplay", function(res) {
+        var loaded = function(res) {
             if (dfd.fired == -1) dfd.resolve(name);
-        }, false);
+        };
+
+        audio.addEventListener("canplay", loaded, false);
+        audio.addEventListener("loaded", loaded, false);
         audio.src = "res/snd/" + name + ".wav";
         this[name] = audio;
         return dfd;
