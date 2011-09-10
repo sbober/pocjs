@@ -68,18 +68,15 @@ dojo.declare("pocjs.EscapeComponent", null, {
 
         list.push( pocjs.Art.loadBitmap("logo", "res/gui/logo.png") );
 
-        var dfd = new dojo.DeferredList(list).then(function(res){
-            dojo.byId("status").innerHTML = "Done.";
-            return res;
-        });
-
         (   "altar bosskill click1 click2 crumble cut death " +
             "hit hurt2 hurt key kill ladder pickup potion roll " +
             "shoot slide splash thud treasure"
         ).split(" ").forEach(function(name) {
-            dfd = dfd.then(function() {
-             return pocjs.Sound.loadSound(name);
-            });
+             list.push( pocjs.Sound.loadSound(name) );
+        });
+        var dfd = new dojo.DeferredList(list).then(function(res){
+            dojo.byId("status").innerHTML = "Done.";
+            return res;
         });
         this.list = list;
         return dfd;
