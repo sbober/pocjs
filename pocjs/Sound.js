@@ -14,7 +14,7 @@ dojo.mixin(pocjs.Sound, {
         };
 
         audio.addEventListener("canplay", loaded, false);
-        audio.addEventListener("loaded", loaded, false);
+        audio.addEventListener("loadeddata", loaded, false);
         audio.src = "res/snd/" + name + ".wav";
         this[name] = audio;
         return dfd;
